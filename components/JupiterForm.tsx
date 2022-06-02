@@ -38,15 +38,10 @@ import { ElementTitle } from './styles'
 import { RefreshClockwiseIcon, WalletIcon } from './icons'
 import Tooltip from './Tooltip'
 import SwapSettingsModal from './SwapSettingsModal'
-import SwapTokenInfo from './SwapTokenInfo'
 import { numberFormatter } from './SwapTokenInfo'
 import { useTranslation } from 'next-i18next'
-import Tabs from './Tabs'
-import SwapTokenInsights from './SwapTokenInsights'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { handleWalletConnect } from 'components/ConnectWalletButton'
-
-const TABS = ['Market Data', 'Performance Insights']
 
 type UseJupiterProps = Parameters<typeof useJupiter>[0]
 type UseFormValue = Omit<UseJupiterProps, 'amount'> & {
@@ -84,11 +79,6 @@ const JupiterForm: FunctionComponent = () => {
   const [showRoutesModal, setShowRoutesModal] = useState(false)
   const [loadWalletTokens, setLoadWalletTokens] = useState(false)
   const [swapRate, setSwapRate] = useState(false)
-  const [activeTab, setActiveTab] = useState('Market Data')
-
-  const handleTabChange = (tabName) => {
-    setActiveTab(tabName)
-  }
 
   const fetchWalletTokens = useCallback(async () => {
     if (!publicKey) {
@@ -1219,28 +1209,6 @@ const JupiterForm: FunctionComponent = () => {
                 />
               ) : null}
             </div>
-          </div>
-          <div className="w-full py-4 md:w-1/2 md:py-0 lg:w-2/3">
-            <Tabs
-              activeTab={activeTab}
-              onChange={handleTabChange}
-              tabs={TABS}
-            />
-            {inputTokenInfo &&
-            outputTokenInfo &&
-            activeTab === 'Market Data' ? (
-              <SwapTokenInfo
-                inputTokenId={inputTokenInfos?.extensions?.coingeckoId}
-                outputTokenId={outputTokenInfos?.extensions?.coingeckoId}
-              />
-            ) : null}
-            {activeTab === 'Performance Insights' ? (
-              <SwapTokenInsights
-                formState={formValue}
-                jupiterTokens={tokens}
-                setOutputToken={setFormValue}
-              />
-            ) : null}
           </div>
         </div>
       </div>
