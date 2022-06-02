@@ -197,7 +197,7 @@ function App({ Component, pageProps }) {
           <TradeHistoryStoreUpdater />
           <FetchReferrer />
 
-          <ThemeProvider defaultTheme="Mango">
+          <ThemeProvider defaultTheme="Light">
             <WalletListener />
             <ViewportProvider>
               <div className="min-h-screen bg-th-bkg-1">
